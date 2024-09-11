@@ -1,9 +1,4 @@
-// $XDG_DATA_HOME
-
-use crate::{
-        error::HbdResult,
-        shared::Storage,
-    };
+use crate::{error::HbdResult, shared::Storage};
 
 
 pub fn data_home() -> HbdResult<String> {
