@@ -3,3 +3,4 @@ pub mod cmd;
 pub mod error;
 pub mod file;
 pub mod shared;
+pub mod utils;

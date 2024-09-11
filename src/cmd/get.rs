@@ -17,7 +17,10 @@ pub fn get() -> HbdResult<()> {
     // Get all the user from which it's the birthday today
     if let Some(birthdays) = storage_birthdays.birthdays().get(&formatted_date) {
         for birthday_of in birthdays {
-            if !storage_birthdays.reads().contains(birthday_of) {
+            if !storage_birthdays
+                .reads()
+                .contains(&format!("{formatted_date}:{}", now.year()))
+            {
                 if let Some(year) = storage_birthdays.ages().get(birthday_of) {
                     let age = now.year() - *year as i32;
                     println!(

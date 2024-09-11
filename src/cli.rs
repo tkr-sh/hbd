@@ -24,59 +24,44 @@ pub enum Commands {
     Add {
         #[arg(
             value_name = "NAME",
-            help = "The name of the person that you want to add"
+            help = "The name of the person that you want to add",
+            required = true
         )]
-        #[arg(required = true)]
         name: String,
         #[arg(
             value_name = "BIRTHDAY",
-            help = "The birthday (YYYY-MM-DD, if there is a year, else MM-DD)"
+            help = "The birthday (YYYY-MM-DD, if there is a year, else MM-DD)",
+            required = true
         )]
-        #[arg(required = true)]
         birthday: String,
     },
     Get,
-    List {},
-    Remove {},
-    //     /// Clones repos
-    //     #[command(arg_required_else_help = true)]
-    //     Clone {
-    //         /// The remote to clone
-    //         remote: String,
-    //     },
-    //     /// Compare two commits
-    //     Diff {
-    //         #[arg(value_name = "COMMIT")]
-    //         base: Option<OsString>,
-    //         #[arg(value_name = "COMMIT")]
-    //         head: Option<OsString>,
-    //         #[arg(last = true)]
-    //         path: Option<OsString>,
-    //         #[arg(
-    //             long,
-    //             require_equals = true,
-    //             value_name = "WHEN",
-    //             num_args = 0..=1,
-    //             default_value_t = ColorWhen::Auto,
-    //             default_missing_value = "always",
-    //             value_enum
-    //         )]
-    //         color: ColorWhen,
-    //     },
-    //     /// pushes things
-    //     #[command(arg_required_else_help = true)]
-    //     Push {
-    //         /// The remote to target
-    //         remote: String,
-    //     },
-    //     /// adds things
-    //     #[command(arg_required_else_help = true)]
-    //     Add {
-    //         /// Stuff to add
-    //         #[arg(required = true)]
-    //         path: Vec<PathBuf>,
-    //     },
-    //     Stash(StashArgs),
-    //     #[command(external_subcommand)]
-    //     External(Vec<OsString>),
+    List {
+        #[arg(
+            long,
+            help = "Limit how many days you see the birthday from today",
+            short = 'l'
+        )]
+        limit_days: Option<u16>,
+        #[arg(long, help = "Limit how many names you see from today", short = 'L')]
+        limit_names: Option<u16>,
+    },
+    #[command(arg_required_else_help = true, alias = "rm")]
+    Remove {
+        #[arg(
+            value_name = "NAME",
+            help = "The name of the person that you want to remove",
+            required = true
+        )]
+        name: String,
+    },
+    #[command(arg_required_else_help = true)]
+    Read {
+        #[arg(
+            value_name = "NAME",
+            help = "The name of the person that you want to read it's birthday",
+            required = true
+        )]
+        name: String,
+    },
 }
