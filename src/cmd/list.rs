@@ -8,7 +8,7 @@ use {
 };
 
 pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
-    let mut storage_birthdays = read_birthdays_from_json()?;
+    let storage_birthdays = read_birthdays_from_json()?;
 
     // Get the current date and time
     let now: NaiveDate = Utc::now().date_naive();
@@ -20,7 +20,6 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
     birthdays_sorted.sort_by(|a, b| a.0.cmp(&b.0));
 
-    let mut it_days = 0;
     let mut it_names = 0;
 
     for (birthday, names) in birthdays_sorted.iter_mut() {
@@ -42,6 +41,13 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
         // Print
         let in_num_days = (date - now).num_days();
+
+        // If there is a limit in number of days, and that we're over it.
+        if limit_day.is_some() && (limit_day.unwrap() as i64) < in_num_days {
+            break;
+        }
+
+
         println!(
             "In {} day{}:",
             in_num_days,
@@ -50,7 +56,7 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
         for name in names {
             let stringified_age = if let Some(year) = storage_birthdays.ages.get(name) {
-                format!("(Will be {} years)", now.year() - *year as i32)
+                format!("(Will be {} years old)", now.year() - *year as i32)
             } else {
                 String::new()
             };
@@ -59,18 +65,11 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
             it_names += 1;
 
-            if Some(it_names) == limit_names {
-                break;
+            if Some(it_names) >= limit_names {
+                return Ok(());
             }
         }
         println!();
-
-        // Increase and break in case of limit
-        it_days += 1;
-
-        if Some(it_days) == limit_day {
-            break;
-        }
     }
 
     Ok(())

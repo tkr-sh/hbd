@@ -24,7 +24,7 @@ pub fn get() -> HbdResult<()> {
                 if let Some(year) = storage_birthdays.ages().get(birthday_of) {
                     let age = now.year() - *year as i32;
                     println!(
-                        "\x1B[1;33mToday is the birthday of {birthday_of} ({age} years) !!!\x1B[0m"
+                        "\x1B[1;33mToday is the birthday of {birthday_of} ({age} years old) !!!\x1B[0m"
                     );
                 } else {
                     println!("\x1B[1;33mToday is the birthday of {birthday_of}!!!\x1B[0m");
