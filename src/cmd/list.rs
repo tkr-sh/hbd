@@ -65,7 +65,7 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
             it_names += 1;
 
-            if Some(it_names) >= limit_names {
+            if limit_names.is_some() && Some(it_names) >= limit_names {
                 return Ok(());
             }
         }
