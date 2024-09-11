@@ -1,0 +1,2 @@
+- List all persons next birthdays
+- Format messages

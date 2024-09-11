@@ -1,0 +1,11 @@
+[package]
+name = "hbd"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.38"
+clap = { version = "4", features = ["derive"]}
+regex = "1.10.6"
+serde = { version = "1.0.210", features = ["serde_derive"]}
+serde_json = "1.0.128"
