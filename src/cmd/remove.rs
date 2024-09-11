@@ -1,10 +1,7 @@
-use {
-    crate::{
+use crate::{
         error::HbdResult,
         file::{read_birthdays_from_json, write_birthday_storage},
-    },
-    std::ops::Index,
-};
+    };
 
 pub fn remove(user: &str) -> HbdResult<()> {
     let mut storage_birthdays = read_birthdays_from_json()?;

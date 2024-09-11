@@ -4,7 +4,7 @@ use {
         file::read_birthdays_from_json,
         utils::date::convert_date_formatted_to_naive_date,
     },
-    chrono::{DateTime, Datelike, NaiveDate, Utc},
+    chrono::{Datelike, NaiveDate, Utc},
 };
 
 pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
@@ -24,7 +24,7 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
     for (birthday, names) in birthdays_sorted.iter_mut() {
         // If there are nobody
-        if names.len() == 0 {
+        if names.is_empty() {
             continue;
         }
 

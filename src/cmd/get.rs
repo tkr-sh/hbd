@@ -1,7 +1,6 @@
 use {
-    crate::{error::HbdResult, file::read_birthdays_from_json, shared::Storage},
+    crate::{error::HbdResult, file::read_birthdays_from_json},
     chrono::{Datelike, Utc},
-    std::fmt::write,
 };
 
 

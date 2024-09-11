@@ -1,12 +1,9 @@
 use {
     crate::{
-        error::{HbdError, HbdResult},
+        error::HbdResult,
         file::{read_birthdays_from_json, write_birthday_storage},
-        shared::Storage,
     },
-    chrono::{Datelike, NaiveDate, Utc},
-    regex::Regex,
-    std::{fmt::write, str::FromStr},
+    chrono::{Datelike, Utc},
 };
 
 pub fn read(user: &str) -> HbdResult<()> {

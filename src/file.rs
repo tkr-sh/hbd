@@ -1,12 +1,9 @@
 // $XDG_DATA_HOME
 
-use {
-    crate::{
+use crate::{
         error::HbdResult,
-        shared::{Birthdays, Storage},
-    },
-    std::{collections::HashMap, str::FromStr},
-};
+        shared::Storage,
+    };
 
 
 pub fn data_home() -> HbdResult<String> {

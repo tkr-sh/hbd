@@ -2,11 +2,10 @@ use {
     crate::{
         error::{HbdError, HbdResult},
         file::{read_birthdays_from_json, write_birthday_storage},
-        shared::Storage,
     },
-    chrono::{Datelike, NaiveDate, Utc},
+    chrono::{Datelike, NaiveDate},
     regex::Regex,
-    std::{fmt::write, str::FromStr},
+    std::str::FromStr,
 };
 
 struct DateAndYear {
