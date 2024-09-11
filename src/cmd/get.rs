@@ -19,7 +19,7 @@ pub fn get() -> HbdResult<()> {
         for birthday_of in birthdays {
             if !storage_birthdays
                 .reads()
-                .contains(&format!("{formatted_date}:{}", now.year()))
+                .contains(&format!("{birthday_of}:{}", now.year()))
             {
                 if let Some(year) = storage_birthdays.ages().get(birthday_of) {
                     let age = now.year() - *year as i32;

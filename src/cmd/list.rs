@@ -49,7 +49,7 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
 
         println!(
-            "In {} day{}:",
+            "\x1B[1mIn {} day{}:\x1B[0m",
             in_num_days,
             if in_num_days != 1 { "s" } else { "" }
         );
