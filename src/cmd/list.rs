@@ -56,7 +56,10 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
         for name in names {
             let stringified_age = if let Some(year) = storage_birthdays.ages.get(name) {
-                format!("(Will be {} years old)", now.year() - *year as i32)
+                format!(
+                    "(Will be {} years old)",
+                    now.year() - *year as i32 + if date.year() != now.year() { 1 } else { 0 }
+                )
             } else {
                 String::new()
             };
