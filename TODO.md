@@ -1,2 +1,1 @@
-- List all persons next birthdays
-- Format messages
+- Format messages w/ ~/.config/hbd/config.toml
