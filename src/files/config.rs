@@ -12,6 +12,8 @@ pub struct ToolConfig {
 
 #[derive(Debug, Deserialize)]
 pub struct ConfigFormat {
+    separator_happy_birthday: Option<String>,
+    separator_happy_birthday_age: Option<String>,
     happy_birthday: Option<String>,
     happy_birthday_age: Option<String>,
     birthday_of: Option<String>,
@@ -46,6 +48,10 @@ macro_rules! fn_format {
 
 
 impl ToolConfig {
+    fn_format!(separator_happy_birthday);
+
+    fn_format!(separator_happy_birthday_age);
+
     fn_format!(happy_birthday);
 
     fn_format!(happy_birthday_age);

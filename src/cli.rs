@@ -25,7 +25,10 @@ pub enum Commands {
         )]
         birthday: String,
     },
-    Get,
+    Get {
+        #[arg(long, help = "Use a separator between names", short = 's')]
+        separator: Option<String>,
+    },
     List {
         #[arg(
             long,
