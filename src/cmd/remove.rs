@@ -1,7 +1,4 @@
-use crate::{
-    error::HbdResult,
-    files::storage::{Storage},
-};
+use crate::{error::HbdResult, files::storage::Storage};
 
 pub fn remove(user: &str) -> HbdResult<()> {
     let mut storage_birthdays = Storage::read_from_json()?;
