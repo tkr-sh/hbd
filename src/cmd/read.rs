@@ -1,13 +1,10 @@
 use {
-    crate::{
-        error::HbdResult,
-        file::{read_birthdays_from_json, write_birthday_storage},
-    },
+    crate::{error::HbdResult, files::storage::Storage},
     chrono::{Datelike, Utc},
 };
 
 pub fn read(user: &str) -> HbdResult<()> {
-    let mut storage_birthdays = read_birthdays_from_json()?;
+    let mut storage_birthdays = Storage::read_from_json()?;
 
     // Get the current date and time
     let now = Utc::now();
@@ -27,7 +24,7 @@ pub fn read(user: &str) -> HbdResult<()> {
     }
 
 
-    write_birthday_storage(&storage_birthdays)?;
+    storage_birthdays.write_to_storage()?;
 
     Ok(())
 }

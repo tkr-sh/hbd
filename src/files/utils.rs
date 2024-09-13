@@ -1,5 +1,4 @@
-use crate::{error::HbdResult, shared::Storage};
-
+use crate::error::HbdResult;
 
 pub fn data_home() -> HbdResult<String> {
     Ok(
@@ -8,26 +7,31 @@ pub fn data_home() -> HbdResult<String> {
     )
 }
 
-pub fn read_birthdays_from_json() -> HbdResult<Storage> {
-    let directory = format!("{}/hbd", data_home()?);
-    let file_to_read_from = format!("{directory}/birthdays.json");
+pub fn data_config() -> HbdResult<String> {
+    Ok(std::env::var("XDG_DATA_CONFIG").unwrap_or(format!("{}/.config", std::env::var("HOME")?)))
+}
 
-    let json_content = match std::fs::read_to_string(&file_to_read_from) {
+pub fn handling_file_creation(
+    path: &str,
+    dir: &str,
+    default_value: fn() -> String,
+) -> HbdResult<String> {
+    Ok(match std::fs::read_to_string(&path) {
         Ok(s) => s,
         // Case the file doesn't exists
         Err(why) => {
             match why.kind() {
                 // If the file doesn't exists, create it
                 std::io::ErrorKind::NotFound => {
-                    match create_file(&file_to_read_from) {
-                        Ok(_) => default_stringified_struct(),
+                    match create_file(&path, default_value) {
+                        Ok(_) => default_value(),
                         // If we can't  create file, we're going to try creating the directory, and
                         // if doesn't work, we forfeit
                         Err(_why) => {
-                            match std::fs::create_dir_all(&directory) {
+                            match std::fs::create_dir_all(&dir) {
                                 Ok(_) => {
-                                    create_file(&file_to_read_from)?;
-                                    default_stringified_struct()
+                                    create_file(&path, default_value)?;
+                                    default_value()
                                 },
                                 Err(why) => {
                                     eprintln!("An unexpected error occured: {why:#?}");
@@ -47,28 +51,9 @@ pub fn read_birthdays_from_json() -> HbdResult<Storage> {
                 },
             }
         },
-    };
-
-
-    Ok(serde_json::from_str(&json_content)?)
+    })
 }
 
-
-pub fn write_birthday_storage(birthdays_storage: &Storage) -> HbdResult<()> {
-    let directory = format!("{}/hbd", data_home()?);
-    let file_to_write_to = format!("{directory}/birthdays.json");
-
-    std::fs::write(file_to_write_to, serde_json::to_string(birthdays_storage)?)?;
-
-    Ok(())
-}
-
-
-
-fn default_stringified_struct() -> String {
-    String::from("{\"reads\":[],\"birthdays\":{},\"ages\":{}}")
-}
-
-fn create_file(using_path: &str) -> HbdResult<()> {
-    Ok(std::fs::write(using_path, default_stringified_struct())?)
+fn create_file(using_path: &str, with_default_value: fn() -> String) -> HbdResult<()> {
+    Ok(std::fs::write(using_path, with_default_value())?)
 }

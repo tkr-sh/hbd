@@ -1,4 +1,4 @@
-use {chrono::ParseError, std::env::VarError};
+use {chrono::ParseError, ron::de::SpannedError, std::env::VarError};
 
 pub type HbdResult<OK> = Result<OK, HbdError>;
 
@@ -9,6 +9,7 @@ pub enum HbdError {
     Io(std::io::Error),
     Json(serde_json::Error),
     ParseDate(ParseError),
+    Ron(SpannedError),
 }
 
 // Macro to implement erros into
@@ -26,3 +27,4 @@ impl_from_error!(VarError, Self::VarError);
 impl_from_error!(std::io::Error, Self::Io);
 impl_from_error!(serde_json::Error, Self::Json);
 impl_from_error!(ParseError, Self::ParseDate);
+impl_from_error!(SpannedError, Self::Ron);

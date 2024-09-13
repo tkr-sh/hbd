@@ -1,0 +1,10 @@
+// The default configuration for `hbd`
+ToolConfig(
+    format: ConfigFormat(
+        happy_birthday: Some("\x1B[1;33mToday is the birthday of %s !!!\x1B[0m"),
+        happy_birthday_age: Some("\x1B[1;33mToday is the birthday of %s (%d years old) !!!\x1B[0m"),
+        birthday_of: Some("Birthday of %s !!"),
+        will_be: Some("(Will be %d years old)"),
+        in_x_days: Some("\x1B[1mIn %d day%s:\x1B[0m")
+    )
+)

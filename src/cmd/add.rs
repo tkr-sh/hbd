@@ -1,7 +1,7 @@
 use {
     crate::{
         error::{HbdError, HbdResult},
-        file::{read_birthdays_from_json, write_birthday_storage},
+        files::storage::{self, Storage},
     },
     chrono::{Datelike, NaiveDate},
     regex::Regex,
@@ -14,7 +14,7 @@ struct DateAndYear {
 }
 
 pub fn add(user: &str, birth_date: &str) -> HbdResult<()> {
-    let mut storage_birthdays = read_birthdays_from_json()?;
+    let mut storage_birthdays = Storage::read_from_json()?;
 
     let formatted_date = parse_date(birth_date)?;
 
@@ -35,7 +35,7 @@ pub fn add(user: &str, birth_date: &str) -> HbdResult<()> {
     }
 
 
-    write_birthday_storage(&storage_birthdays)?;
+    storage_birthdays.write_to_storage()?;
 
     Ok(())
 }
