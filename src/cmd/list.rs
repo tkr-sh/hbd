@@ -84,9 +84,7 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
 
         for name in names {
             let stringified_age = if let Some(year) = storage_birthdays.ages.get(name) {
-                format!(
-                    "{}",
-                    fmt_string(
+                fmt_string(
                         config.will_be(),
                         FormatWith::d(
                             (now.year() - *year as i32 +
@@ -94,8 +92,7 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
                             .to_string()
                             .as_str()
                         )
-                    )
-                )
+                    ).to_string()
             } else {
                 String::new()
             };

@@ -1,7 +1,7 @@
 use {
     crate::{
         error::{HbdError, HbdResult},
-        files::storage::{self, Storage},
+        files::storage::{Storage},
     },
     chrono::{Datelike, NaiveDate},
     regex::Regex,

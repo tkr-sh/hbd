@@ -32,10 +32,10 @@ pub fn fmt_string(formatter_string: String, args: FormatWith) -> String {
     } else {
         formatter_string
     };
-    let formatter_string = if let Some(d) = args.d {
+    
+    if let Some(d) = args.d {
         formatter_string.replace("%d", d)
     } else {
         formatter_string
-    };
-    formatter_string
+    }
 }

@@ -1,7 +1,6 @@
 use {
     clap::Parser,
     hbd::cmd::{add, get, list, read, remove},
-    std::fmt::Debug,
 };
 
 fn main() {

@@ -16,21 +16,21 @@ pub fn handling_file_creation(
     dir: &str,
     default_value: fn() -> String,
 ) -> HbdResult<String> {
-    Ok(match std::fs::read_to_string(&path) {
+    Ok(match std::fs::read_to_string(path) {
         Ok(s) => s,
         // Case the file doesn't exists
         Err(why) => {
             match why.kind() {
                 // If the file doesn't exists, create it
                 std::io::ErrorKind::NotFound => {
-                    match create_file(&path, default_value) {
+                    match create_file(path, default_value) {
                         Ok(_) => default_value(),
                         // If we can't  create file, we're going to try creating the directory, and
                         // if doesn't work, we forfeit
                         Err(_why) => {
-                            match std::fs::create_dir_all(&dir) {
+                            match std::fs::create_dir_all(dir) {
                                 Ok(_) => {
-                                    create_file(&path, default_value)?;
+                                    create_file(path, default_value)?;
                                     default_value()
                                 },
                                 Err(why) => {

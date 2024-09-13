@@ -1,6 +1,6 @@
 use crate::{
     error::HbdResult,
-    files::storage::{self, Storage},
+    files::storage::{Storage},
 };
 
 pub fn remove(user: &str) -> HbdResult<()> {
