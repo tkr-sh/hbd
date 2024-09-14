@@ -1,14 +1,14 @@
 use crate::{
     error::HbdResult,
     files::storage::Storage,
-    utils::{check_exists::check_user_exists, date::parse_date},
+    utils::{check_exists::check_user_exists, date::DateAndYear},
 };
 
 
 pub fn add(user: &str, birth_date: &str) -> HbdResult<()> {
     let mut storage_birthdays = Storage::read_from_json()?;
 
-    let formatted_date = parse_date(birth_date)?;
+    let formatted_date = DateAndYear::from_date_str(birth_date)?;
 
     // If the user exists, we can't proceed!
     if check_user_exists(&storage_birthdays, user) {
@@ -18,14 +18,13 @@ pub fn add(user: &str, birth_date: &str) -> HbdResult<()> {
 
     if let Some(birthdays) = storage_birthdays
         .birthdays
-        .get_mut(&formatted_date.date_formatted().to_owned())
+        .get_mut(&formatted_date.date_u16())
     {
         birthdays.push(user.to_owned());
     } else {
-        storage_birthdays.birthdays.insert(
-            formatted_date.date_formatted().to_owned(),
-            vec![user.to_owned()],
-        );
+        storage_birthdays
+            .birthdays
+            .insert(*formatted_date.date_u16(), vec![user.to_owned()]);
     }
 
     if let Some(year) = formatted_date.year() {

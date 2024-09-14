@@ -1,4 +1,4 @@
-use crate::{error::HbdResult, files::storage::Storage, utils::date::parse_date};
+use crate::{error::HbdResult, files::storage::Storage, utils::date::DateAndYear};
 
 
 pub fn import(
@@ -44,7 +44,7 @@ pub fn import(
 
         // Date
         let formatted_date = if let Some(birth_date) = line_iter.next() {
-            match parse_date(birth_date) {
+            match DateAndYear::from_date_str(birth_date) {
                 Ok(d) => d,
                 Err(why) => {
                     eprintln!("Item at line {i} is in a bad format: `{line}`");
@@ -66,14 +66,13 @@ pub fn import(
         // Insert the birthday in the JSON
         if let Some(birthdays) = storage_birthdays
             .birthdays
-            .get_mut(formatted_date.date_formatted())
+            .get_mut(formatted_date.date_u16())
         {
             birthdays.push(name.to_owned());
         } else {
-            storage_birthdays.birthdays.insert(
-                formatted_date.date_formatted().to_owned(),
-                vec![name.to_owned()],
-            );
+            storage_birthdays
+                .birthdays
+                .insert(*formatted_date.date_u16(), vec![name.to_owned()]);
         }
 
         // Add the year if there is some
