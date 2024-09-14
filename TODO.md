@@ -1,3 +1,2 @@
-- Convert key to int
 - set command
 - Examples for waybar
