@@ -8,9 +8,11 @@ pub fn remove(user: &str) -> HbdResult<()> {
         if names.contains(&user_string) {
             names.retain(|n| n != user);
             storage_birthdays.write_to_storage()?;
-            break;
+            return Ok(());
         }
     }
+
+    println!("No users with the name \x1b[1m`{user}`\x1B[0m found.");
 
     Ok(())
 }
