@@ -9,10 +9,6 @@ use {
     std::str::FromStr,
 };
 
-struct DateAndYear {
-    date_formatted: String,
-    year: Option<u16>,
-}
 
 pub fn add(user: &str, birth_date: &str) -> HbdResult<()> {
     let mut storage_birthdays = Storage::read_from_json()?;
