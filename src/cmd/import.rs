@@ -86,6 +86,8 @@ pub fn import(path: &str, exit_on_duplicate: Option<bool>) -> HbdResult<()> {
 
     storage_birthdays.write_to_storage()?;
 
+    println!("All birthdays have been successfully imported!");
+
     Ok(())
 }
 
