@@ -1,7 +1,8 @@
 use {
     crate::{
         error::{HbdError, HbdResult},
-        files::storage::{Storage},
+        files::storage::Storage,
+        utils::check_exists::check_user_exists,
     },
     chrono::{Datelike, NaiveDate},
     regex::Regex,
@@ -18,6 +19,11 @@ pub fn add(user: &str, birth_date: &str) -> HbdResult<()> {
 
     let formatted_date = parse_date(birth_date)?;
 
+    // If the user exists, we can't proceed!
+    if check_user_exists(&storage_birthdays, user) {
+        println!("A person with the name `{user}` already exists.\nUse `rename` to change that person's name, or, add this person with another name.");
+        std::process::exit(1)
+    }
 
     if let Some(birthdays) = storage_birthdays
         .birthdays
