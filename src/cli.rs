@@ -11,6 +11,7 @@ pub struct Cli {
 #[derive(Debug, clap::Subcommand)]
 pub enum Commands {
     #[command(arg_required_else_help = true)]
+    #[command(about = "Add a birthdays to your list of birthdays")]
     Add {
         #[arg(
             value_name = "NAME",
@@ -25,6 +26,7 @@ pub enum Commands {
         )]
         birthday: String,
     },
+    #[command(about = "Import birthdays from a path")]
     Import {
         #[arg(
             value_name = "PATH",
@@ -45,10 +47,12 @@ pub enum Commands {
         )]
         check_duplicate: Option<bool>,
     },
+    #[command(about = "Get today's birthdays")]
     Get {
         #[arg(long, help = "Use a separator between names", short = 's')]
         separator: Option<String>,
     },
+    #[command(about = "Rename someone")]
     Rename {
         #[arg(
             value_name = "NAME_FROM",
@@ -63,6 +67,7 @@ pub enum Commands {
         )]
         to: String,
     },
+    #[command(about = "List all the saved birthdays")]
     List {
         #[arg(
             long,
@@ -74,6 +79,7 @@ pub enum Commands {
         limit_names: Option<usize>,
     },
     #[command(arg_required_else_help = true, alias = "rm")]
+    #[command(about = "Remove someone birthday from your list")]
     Remove {
         #[arg(
             value_name = "NAME",
@@ -83,6 +89,9 @@ pub enum Commands {
         name: String,
     },
     #[command(arg_required_else_help = true)]
+    #[command(
+        about = "Read the birthday of somebody. This birthday won't appear when using `get` this year"
+    )]
     Read {
         #[arg(
             value_name = "NAME",
