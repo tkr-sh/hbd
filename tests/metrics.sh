@@ -1,6 +1,3 @@
-user1="$(shuf -er -n8  {A..Z} {a..z} {0..9} | paste -sd "")"
-user2="$(shuf -er -n8  {A..Z} {a..z} {0..9} | paste -sd "")"
-
 commands_to_test=(
     # Help
     " "
