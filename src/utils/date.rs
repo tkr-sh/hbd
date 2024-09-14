@@ -59,7 +59,8 @@ impl DateAndYear {
 
 
                     return Ok(DateAndYear {
-                        date_u16: capture[1].parse::<u16>()? * 31 + capture[2].parse::<u16>()?,
+                        date_u16: (capture[1].parse::<u16>()? - 1) * 31 +
+                            (capture[2].parse::<u16>()? - 1),
                         year: None,
                     });
                 } else {

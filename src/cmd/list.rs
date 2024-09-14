@@ -50,7 +50,7 @@ pub fn list(limit_day: Option<usize>, limit_names: Option<usize>) -> HbdResult<(
         }
 
         let birthday_date = DateAndYear::new(*birthday, Some(now_naive.year() as u16));
-        let birthday_naive: NaiveDate = birthday_date.into();
+        let birthday_naive = NaiveDate::from(birthday_date);
 
         let date = if *birthday < *now.date_u16() {
             birthday_naive.with_year(now_naive.year() + 1).unwrap()
