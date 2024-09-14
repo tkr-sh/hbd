@@ -11,7 +11,7 @@ pub struct Cli {
 #[derive(Debug, clap::Subcommand)]
 pub enum Commands {
     #[command(arg_required_else_help = true)]
-    #[command(about = "Add a birthdays to your list of birthdays")]
+    #[command(about = "Add a birthday to your list of birthdays")]
     Add {
         #[arg(
             value_name = "NAME",

@@ -22,7 +22,7 @@ A command line tool to help you remind birthdays
 Usage: hbd <COMMAND>
 
 Commands:
-  add     Add a birthdays to your list of birthdays
+  add     Add a birthday to your list of birthdays
   import  Import birthdays from a path
   get     Get todays birthdays
   rename  Rename someone
