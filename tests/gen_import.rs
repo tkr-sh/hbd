@@ -19,7 +19,6 @@ fn gen_import() -> Result<(), std::io::Error> {
 
     let _ = file.write(
         (1..=1_000_000)
-            .into_iter()
             .map(|_| {
                 // Generate a random month (01 to 12)
                 let random_month = format!("{:02}", rng.gen_range(1..=12));
