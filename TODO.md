@@ -1,4 +1,5 @@
-- Format messages w/ ~/.config/hbd/config.toml
 - Separator for get
-- Examples for waybar
 - Convert key to int
+- set command
+- import command
+- Examples for waybar
