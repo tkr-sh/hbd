@@ -29,6 +29,20 @@ pub enum Commands {
         #[arg(long, help = "Use a separator between names", short = 's')]
         separator: Option<String>,
     },
+    Rename {
+        #[arg(
+            value_name = "NAME_FROM",
+            help = "The original name of the user to be renamed",
+            required = true
+        )]
+        from: String,
+        #[arg(
+            value_name = "NAME_TO",
+            help = "The new name of the user",
+            required = true
+        )]
+        to: String,
+    },
     List {
         #[arg(
             long,
