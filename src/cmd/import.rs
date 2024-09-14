@@ -10,7 +10,11 @@ use {
 };
 
 
-pub fn import(path: &str, exit_on_duplicate: Option<bool>) -> HbdResult<()> {
+pub fn import(
+    path: &str,
+    exit_on_duplicate: Option<bool>,
+    check_duplicates: Option<bool>,
+) -> HbdResult<()> {
     let mut storage_birthdays = Storage::read_from_json()?;
 
     // get the content of the file
@@ -18,7 +22,7 @@ pub fn import(path: &str, exit_on_duplicate: Option<bool>) -> HbdResult<()> {
 
 
     // Get all the existings names in a vector, to easily check if they exists after that.
-    let all_names = storage_birthdays
+    let mut all_names = storage_birthdays
         .birthdays()
         .clone()
         .into_iter()
@@ -27,17 +31,20 @@ pub fn import(path: &str, exit_on_duplicate: Option<bool>) -> HbdResult<()> {
 
 
     // We need to evaluate each line of the files
-    for (i, line) in file_content.lines().enumerate() {
+    for (i, line) in tqdm::tqdm(file_content.lines().enumerate()) {
         let mut line_iter = line.split(' ');
 
         // Name
         let name = if let Some(name) = line_iter.next() {
-            if all_names.iter().any(|n| n == name) {
-                eprintln!("Person with name `{name}` already exists");
+            if check_duplicates.unwrap_or(true) {
+                if all_names.iter().any(|n| n == name) {
+                    eprintln!("Person with name `{name}` already exists");
 
-                if exit_on_duplicate.unwrap_or(false) {
-                    std::process::exit(1)
+                    if exit_on_duplicate.unwrap_or(false) {
+                        std::process::exit(1)
+                    }
                 }
+                all_names.push(name.to_owned());
             }
             name
         } else {
@@ -83,6 +90,7 @@ pub fn import(path: &str, exit_on_duplicate: Option<bool>) -> HbdResult<()> {
             storage_birthdays.ages.insert(name.to_owned(), *year);
         }
     }
+    println!("{storage_birthdays:#?}");
 
     storage_birthdays.write_to_storage()?;
 

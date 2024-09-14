@@ -38,6 +38,12 @@ pub enum Commands {
             short = 'x'
         )]
         exit_on_dupliate: Option<bool>,
+        #[arg(
+            long,
+            help = "Should the program exists in case of a duplicate (default: true)",
+            short = 'c'
+        )]
+        check_duplicate: Option<bool>,
     },
     Get {
         #[arg(long, help = "Use a separator between names", short = 's')]
@@ -63,9 +69,9 @@ pub enum Commands {
             help = "Limit how many days you see the birthday from today",
             short = 'l'
         )]
-        limit_days: Option<u16>,
+        limit_days: Option<usize>,
         #[arg(long, help = "Limit how many names you see from today", short = 'L')]
-        limit_names: Option<u16>,
+        limit_names: Option<usize>,
     },
     #[command(arg_required_else_help = true, alias = "rm")]
     Remove {
