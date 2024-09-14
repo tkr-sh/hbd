@@ -2,9 +2,12 @@ use {
     crate::{
         error::HbdResult,
         files::{config::ToolConfig, storage::Storage},
-        utils::fmt::{fmt_string, FormatWith},
+        utils::{
+            date::DateAndYear,
+            fmt::{fmt_string, FormatWith},
+        },
     },
-    chrono::{Datelike, Utc},
+    chrono::{Datelike, NaiveDate, Utc},
 };
 
 
@@ -14,21 +17,21 @@ pub fn get(separator: Option<String>) -> HbdResult<()> {
     let mut config_birthdays = ToolConfig::read_from_config()?;
 
     // Get the current date and time
-    let now = Utc::now();
-
-    // Format the date as "MM-DD"
-    let formatted_date = now.format("%m-%d").to_string();
+    let now_utc = Utc::now();
+    let now = DateAndYear::from_naivedate(&now_utc.date_naive());
 
     let ref_separator: &Option<String> = &separator;
 
     // Get all the user from which it's the birthday today
-    if let Some(birthdays) = storage_birthdays.birthdays().get(&formatted_date) {
+    if let Some(birthdays) = storage_birthdays.birthdays().get(&now.date_u16()) {
         let iter = birthdays
             .iter()
             .filter(|b| {
                 !storage_birthdays
                     .reads()
-                    .contains(&format!("{b}:{}", now.year()))
+                    .get(*b)
+                    .map(|v| v.contains(&(now_utc.year() as u16)))
+                    .unwrap_or(false)
             })
             .collect::<Vec<&String>>();
 
@@ -37,7 +40,7 @@ pub fn get(separator: Option<String>) -> HbdResult<()> {
         for (idx, birthday_of) in iter.into_iter().enumerate() {
             // in case we have the year, we'll try getting the age too
             if let Some(year) = storage_birthdays.ages().get(birthday_of) {
-                let age = now.year() - *year as i32;
+                let age = now_utc.year() - *year as i32;
 
                 print!(
                     "{}",
