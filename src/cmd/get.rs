@@ -7,7 +7,7 @@ use {
             fmt::{fmt_string, FormatWith},
         },
     },
-    chrono::{Datelike, NaiveDate, Utc},
+    chrono::{Datelike, Utc},
 };
 
 

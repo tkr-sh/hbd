@@ -3,7 +3,7 @@ use {
         error::HbdResult,
         files::{config::ToolConfig, storage::Storage},
         utils::{
-            date::{convert_date_formatted_to_naive_date, DateAndYear},
+            date::DateAndYear,
             fmt::{fmt_string, FormatWith},
         },
     },
