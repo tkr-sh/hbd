@@ -3,7 +3,7 @@ use {
         error::HbdResult,
         files::{config::ToolConfig, storage::Storage},
         utils::{
-            date::convert_date_formatted_to_naive_date,
+            date::DateAndYear,
             fmt::{fmt_string, FormatWith},
         },
     },
@@ -15,29 +15,27 @@ pub fn list(limit_day: Option<usize>, limit_names: Option<usize>) -> HbdResult<(
     let mut config = ToolConfig::read_from_config()?;
 
     // Get the current date and time
-    let now: NaiveDate = Utc::now().date_naive();
+    let now_naive = Utc::now().date_naive();
+    let now = DateAndYear::from_naivedate(&now_naive);
 
     let mut birthdays_sorted = storage_birthdays
         .birthdays
         .into_iter()
-        .collect::<Vec<(String, _)>>();
+        .collect::<Vec<(u16, _)>>();
 
     birthdays_sorted.sort_by(|a, b| {
-        let a_date = convert_date_formatted_to_naive_date(&a.0, now.year());
-        let b_date = convert_date_formatted_to_naive_date(&b.0, now.year());
         // convert in number of days
-        let a_duration = (a_date - now).num_days();
-        let a_duration = if a_duration > 0 {
-            a_duration
+        let a_duration = if a.0 > *now.date_u16() {
+            a.0
         } else {
-            a_duration + 1024
+            a.0 + 1024
         };
+
         // convert in number of days
-        let b_duration = (b_date - now).num_days();
-        let b_duration = if b_duration > 0 {
-            b_duration
+        let b_duration = if b.0 > *now.date_u16() {
+            b.0
         } else {
-            b_duration + 1024
+            b.0 + 1024
         };
 
         a_duration.cmp(&b_duration)
@@ -51,19 +49,17 @@ pub fn list(limit_day: Option<usize>, limit_names: Option<usize>) -> HbdResult<(
             continue;
         }
 
-        let date = convert_date_formatted_to_naive_date(birthday, now.year());
+        let birthday_date = DateAndYear::new(*birthday, Some(now_naive.year() as u16));
+        let birthday_naive: NaiveDate = birthday_date.into();
 
-        // Calculate the difference in days
-        let duration = (date - now).num_days();
-
-        let date = if duration < 0 {
-            date.with_year(now.year() + 1).unwrap()
+        let date = if *birthday < *now.date_u16() {
+            birthday_naive.with_year(now_naive.year() + 1).unwrap()
         } else {
-            date
+            birthday_naive
         };
 
         // Print
-        let in_num_days = (date - now).num_days();
+        let in_num_days = (date - now_naive).num_days();
 
         // If there is a limit in number of days, and that we're over it.
         if limit_day.is_some() && (limit_day.unwrap() as i64) < in_num_days {
@@ -87,9 +83,14 @@ pub fn list(limit_day: Option<usize>, limit_names: Option<usize>) -> HbdResult<(
                 fmt_string(
                     config.will_be(),
                     FormatWith::d(
-                        (now.year() - *year as i32 + if date.year() != now.year() { 1 } else { 0 })
-                            .to_string()
-                            .as_str(),
+                        (now_naive.year() - *year as i32 +
+                            if date.year() != now_naive.year() {
+                                1
+                            } else {
+                                0
+                            })
+                        .to_string()
+                        .as_str(),
                     ),
                 )
                 .to_string()

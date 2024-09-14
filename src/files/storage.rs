@@ -4,12 +4,15 @@ use {
     std::collections::HashMap,
 };
 
-pub type Birthdays = HashMap<String, Vec<String>>;
+/// date_u16 => Vec<name>
+pub type Birthdays = HashMap<u16, Vec<String>>;
 
 #[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub struct Storage {
-    pub reads: Vec<String>,
+    /// name =>  Vec<year>
+    pub reads: HashMap<String, Vec<u16>>,
     pub birthdays: Birthdays,
+    /// name =>  year
     pub ages: HashMap<String, u16>,
 }
 
@@ -41,7 +44,7 @@ impl Storage {
         &self.ages
     }
 
-    pub fn reads(&self) -> &Vec<String> {
+    pub fn reads(&self) -> &HashMap<String, Vec<u16>> {
         &self.reads
     }
 }
@@ -49,5 +52,5 @@ impl Storage {
 
 
 fn default_stringified_struct() -> String {
-    String::from("{\"reads\":[],\"birthdays\":{},\"ages\":{}}")
+    String::from("{\"reads\":{},\"birthdays\":{},\"ages\":{}}")
 }
