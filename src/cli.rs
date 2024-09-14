@@ -25,6 +25,20 @@ pub enum Commands {
         )]
         birthday: String,
     },
+    Import {
+        #[arg(
+            value_name = "PATH",
+            help = "The path of the file to import data from.\nEach line of the file should be in the format: `NAME MM-DD`",
+            required = true
+        )]
+        path: String,
+        #[arg(
+            long,
+            help = "Should the program exists in case of a duplicate (default: false)",
+            short = 'x'
+        )]
+        exit_on_dupliate: Option<bool>,
+    },
     Get {
         #[arg(long, help = "Use a separator between names", short = 's')]
         separator: Option<String>,
