@@ -12,7 +12,8 @@ fn main() {
         hbd::cli::Commands::Import {
             path,
             exit_on_dupliate,
-        } => import(&path, exit_on_dupliate),
+            check_duplicate,
+        } => import(&path, exit_on_dupliate, check_duplicate),
         hbd::cli::Commands::Read { name } => read(&name),
         hbd::cli::Commands::Add { name, birthday } => add(&name, &birthday),
         hbd::cli::Commands::List {

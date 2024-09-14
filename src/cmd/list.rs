@@ -10,7 +10,7 @@ use {
     chrono::{Datelike, NaiveDate, Utc},
 };
 
-pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
+pub fn list(limit_day: Option<usize>, limit_names: Option<usize>) -> HbdResult<()> {
     let storage_birthdays = Storage::read_from_json()?;
     let mut config = ToolConfig::read_from_config()?;
 
@@ -43,7 +43,7 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
         a_duration.cmp(&b_duration)
     });
 
-    let mut it_names = 0;
+    let mut it_names = 0usize;
 
     for (birthday, names) in birthdays_sorted.iter_mut() {
         // If there are nobody
@@ -85,14 +85,14 @@ pub fn list(limit_day: Option<u16>, limit_names: Option<u16>) -> HbdResult<()> {
         for name in names {
             let stringified_age = if let Some(year) = storage_birthdays.ages.get(name) {
                 fmt_string(
-                        config.will_be(),
-                        FormatWith::d(
-                            (now.year() - *year as i32 +
-                                if date.year() != now.year() { 1 } else { 0 })
+                    config.will_be(),
+                    FormatWith::d(
+                        (now.year() - *year as i32 + if date.year() != now.year() { 1 } else { 0 })
                             .to_string()
-                            .as_str()
-                        )
-                    ).to_string()
+                            .as_str(),
+                    ),
+                )
+                .to_string()
             } else {
                 String::new()
             };
