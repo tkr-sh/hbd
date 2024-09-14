@@ -18,7 +18,7 @@ pub fn add(user: &str, birth_date: &str) -> HbdResult<()> {
 
     if let Some(birthdays) = storage_birthdays
         .birthdays
-        .get_mut(&formatted_date.date_u16())
+        .get_mut(formatted_date.date_u16())
     {
         birthdays.push(user.to_owned());
     } else {

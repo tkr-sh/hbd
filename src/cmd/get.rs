@@ -23,7 +23,7 @@ pub fn get(separator: Option<String>) -> HbdResult<()> {
     let ref_separator: &Option<String> = &separator;
 
     // Get all the user from which it's the birthday today
-    if let Some(birthdays) = storage_birthdays.birthdays().get(&now.date_u16()) {
+    if let Some(birthdays) = storage_birthdays.birthdays().get(now.date_u16()) {
         let iter = birthdays
             .iter()
             .filter(|b| {

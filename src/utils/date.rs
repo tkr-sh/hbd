@@ -2,7 +2,7 @@ use {
     crate::error::{HbdError, HbdResult},
     chrono::{Datelike, NaiveDate},
     regex::Regex,
-    std::{str::FromStr, u16},
+    std::str::FromStr,
 };
 
 /// This function uses `.unwrap()` because the arguments passed to the function are considered to
@@ -21,12 +21,12 @@ pub struct DateAndYear {
     year: Option<u16>,
 }
 
-impl Into<NaiveDate> for DateAndYear {
-    fn into(self) -> NaiveDate {
+impl From<DateAndYear> for NaiveDate {
+    fn from(val: DateAndYear) -> Self {
         NaiveDate::from_ymd_opt(
-            self.year.unwrap() as i32,
-            self.date_u16 as u32 / 31 + 1,
-            self.date_u16 as u32 % 31 + 1,
+            val.year.unwrap() as i32,
+            val.date_u16 as u32 / 31 + 1,
+            val.date_u16 as u32 % 31 + 1,
         )
         .unwrap()
     }
@@ -59,7 +59,7 @@ impl DateAndYear {
 
 
                     return Ok(DateAndYear {
-                        date_u16: &capture[1].parse::<u16>()? * 31 + &capture[2].parse::<u16>()?,
+                        date_u16: capture[1].parse::<u16>()? * 31 + capture[2].parse::<u16>()?,
                         year: None,
                     });
                 } else {
