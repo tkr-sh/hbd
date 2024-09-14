@@ -1,6 +1,7 @@
 pub mod add;
 pub mod get;
-pub use {add::add, get::get, list::list, read::read, remove::remove};
+pub mod rename;
+pub use {add::add, get::get, list::list, read::read, remove::remove, rename::rename};
 pub mod list;
 pub mod read;
 pub mod remove;

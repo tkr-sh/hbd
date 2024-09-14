@@ -1,6 +1,6 @@
 use {
     clap::Parser,
-    hbd::cmd::{add, get, list, read, remove},
+    hbd::cmd::{add, get, list, read, remove, rename},
 };
 
 fn main() {
@@ -8,6 +8,7 @@ fn main() {
 
     match args.command {
         hbd::cli::Commands::Get { separator } => get(separator),
+        hbd::cli::Commands::Rename { from, to } => rename(&from, &to),
         hbd::cli::Commands::Read { name } => read(&name),
         hbd::cli::Commands::Add { name, birthday } => add(&name, &birthday),
         hbd::cli::Commands::List {
