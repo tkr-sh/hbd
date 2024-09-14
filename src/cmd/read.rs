@@ -13,7 +13,7 @@ pub fn read(user: &str) -> HbdResult<()> {
     let date = DateAndYear::from_naivedate(&now);
 
     // Get all the user from which it's the birthday today
-    if let Some(birthdays) = storage_birthdays.birthdays().get(&date.date_u16()) {
+    if let Some(birthdays) = storage_birthdays.birthdays().get(date.date_u16()) {
         if birthdays.contains(&user.to_string()) {
             storage_birthdays
                 .reads
