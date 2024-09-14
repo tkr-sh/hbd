@@ -13,10 +13,7 @@ commands_to_test=(
     "hbd add user2 06-06"
     # Add existing user
     " "
-    "hbd add user2 06-07" 
-    # Remove user
-    "hbd add user1 06-06"
-    "hbd remove user1"
+    "hbd add user2 06-07"
     # Rename user
     "hbd rename user user2"
     "hbd rename user2 user" 
@@ -44,17 +41,11 @@ cargo build --release
 
 # Create test data
 echo "Creating test data..."
-for ((i=1; i<=100000; i++)); do
-    random_month=$( printf "%02d" $((RANDOM % 12 + 1)) )
-    random_day=$( printf "%02d" $((RANDOM % 28 + 1)) )
-    user="$(shuf -er -n16  {A..Z} {a..z} {0..9} | paste -sd "")"
-    ./target/release/hbd add "$user" "$random_month-$random_day"
-    echo "$i/100 000 ..."
-done
+./target/release/hbd import --check-duplicate false ./import
 echo "Done!"
 
 
-echo '' > METRICS.md
+printf 'This is the metrics for 1 million birthdays registered.\n\n' > METRICS.md
 for ((i=0; i<"${#commands_to_test[@]}"; i+=2)); do
 
     # Commands to execute
@@ -66,12 +57,16 @@ for ((i=0; i<"${#commands_to_test[@]}"; i+=2)); do
 
     cmd_to_exec_before="$(echo "$before" | sed 's,hbd,./target/release/hbd,g')"
     cmd_to_exec="$(echo "$cmd" | sed 's,hbd,./target/release/hbd,g')"
-    hyperfine --prepare 'eval "$cmd_to_exec_before"' --warmup 5 'eval "$cmd_to_exec"' --export-markdown METRICS$i.md
+
+    echo "$cmd_to_exec"
+
+    hyperfine -i --prepare "$cmd_to_exec_before" --warmup 5 "$cmd_to_exec" --export-markdown _METRICS$i.md
 
     # Format metrics
-    cat METRICS$i.md | sed "s/eval \"\$cmd_to_exec\"/$cmd/g" >> METRICS.md
+    cat _METRICS$i.md | sed "s/eval \"\$cmd_to_exec\"/$cmd/g" >> METRICS.md
     printf '\n' >> METRICS.md
-    rm METRICS$i.md
+    rm _METRICS$i.md
 done
 
 cp ~/.local/share/hbd/birthdays.json.bak ~/.local/share/hbd/birthdays.json
+rm ~/.local/share/hbd/birthdays.json.bak

@@ -24,7 +24,7 @@ pub fn get(separator: Option<String>) -> HbdResult<()> {
     // Get all the user from which it's the birthday today
     if let Some(birthdays) = storage_birthdays.birthdays().get(&formatted_date) {
         let iter = birthdays
-            .into_iter()
+            .iter()
             .filter(|b| {
                 !storage_birthdays
                     .reads()
