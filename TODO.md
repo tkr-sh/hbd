@@ -1,5 +1,3 @@
-- Separator for get
 - Convert key to int
 - set command
-- import command
 - Examples for waybar
