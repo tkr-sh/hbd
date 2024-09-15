@@ -76,8 +76,8 @@ Sleep 2500ms
 # Remove
 Enter
 Type "# Remove the birthday of someone named 'today'"
-Sleep 500ms
 Enter
+Sleep 500ms
 Type "hbd remove today"
 Enter
 Sleep 2500ms

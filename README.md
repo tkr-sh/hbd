@@ -22,13 +22,13 @@ A command line tool to help you remind birthdays
 Usage: hbd <COMMAND>
 
 Commands:
-  add
-  import
-  get
-  rename
-  list
-  remove
-  read
+  add     Add a birthday to your list of birthdays
+  import  Import birthdays from a path
+  get     Get todays birthdays
+  rename  Rename someone
+  list    List all the saved birthdays
+  remove  Remove someone birthday from your list
+  read    Read the birthday of somebody. This birthday wont appear when using `get` this year
   help    Print this message or the help of the given subcommand(s)
 
 Options:
