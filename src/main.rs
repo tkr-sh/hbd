@@ -1,6 +1,6 @@
 use {
     clap::Parser,
-    hbd::cmd::{add, get, import, list, read, remove, rename},
+    hbd::cmd::{add, get, import, list, read, remove, rename, set},
 };
 
 fn main() {
@@ -21,6 +21,7 @@ fn main() {
             limit_names,
         } => list(limit_days, limit_names),
         hbd::cli::Commands::Remove { name } => remove(&name),
+        hbd::cli::Commands::Set { name, birthday } => set(&name, &birthday),
     }
     .unwrap();
 }

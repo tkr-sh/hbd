@@ -100,4 +100,20 @@ pub enum Commands {
         )]
         name: String,
     },
+    #[command(arg_required_else_help = true)]
+    #[command(about = "Set/changes the birthday of a user that already exists")]
+    Set {
+        #[arg(
+            value_name = "NAME",
+            help = "The name of the person that you want to set it's birthday",
+            required = true
+        )]
+        name: String,
+        #[arg(
+            value_name = "BIRTHDAY",
+            help = "The birthday (YYYY-MM-DD, if there is a year, else MM-DD)",
+            required = true
+        )]
+        birthday: String,
+    },
 }

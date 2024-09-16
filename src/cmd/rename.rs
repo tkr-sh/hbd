@@ -17,8 +17,7 @@ pub fn rename(from: &str, to: &str) -> HbdResult<()> {
             if let Some(year) = storage_birthdays.ages.remove(from) {
                 storage_birthdays.ages.insert(to.to_owned(), year);
             }
-
-            // TODO: Add reads when the update is done
+            storage_birthdays.reads.remove(from);
 
             storage_birthdays.write_to_storage()?;
             return Ok(());
