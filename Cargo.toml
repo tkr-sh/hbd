@@ -10,6 +10,14 @@ documentation = "https://docs.rs/hbd/latest/hbd/index.html"
 readme = "README.md"
 keywords = ["cli", "birthday", "date"]
 categories = ["cli"]
+exclude = [
+    "docs/*",
+    "examples/*",
+    "packages/*",
+    "*.md",
+    "*.gif",
+    "justfile",
+]
 
 
 
