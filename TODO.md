@@ -1,2 +1,0 @@
-- set command
-- Examples for waybar
