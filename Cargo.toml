@@ -9,7 +9,7 @@ repository = "https://github.com/tkr-sh/hbd"
 documentation = "https://docs.rs/hbd/latest/hbd/index.html"
 readme = "README.md"
 keywords = ["cli", "birthday", "date"]
-categories = ["command-line-utilities"]
+categories = ["command-line-utilities", "date-and-time"]
 exclude = [
     "docs/*",
     "examples/*",
