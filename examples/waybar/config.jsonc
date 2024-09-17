@@ -1,0 +1,22 @@
+{
+    "margin-top": 5,
+    "margin-bottom": 0,
+    "margin-left": 10,
+    "margin-right": 10,
+    "height": 40,
+    "modules-left": [],
+    "modules-center": ["custom/hbd-basic", "custom/hbd-normal", "custom/hbd-advanced"],
+    "modules-right": [],
+    "custom/hbd-basic": {
+        "format": "| {} |",
+        "exec": "hbd get -s ', '"
+    },
+    "custom/hbd-normal": {
+        "format": "| {} | ",
+        "exec": "if [ -z \"$(hbd get)\" ]; then echo 'No birthdays today'; else hbd get -s ', '; fi"
+    },
+    "custom/hbd-advanced": {
+        "format": "| {} |",
+        "exec": "bash cmd.sh"
+    },
+}
