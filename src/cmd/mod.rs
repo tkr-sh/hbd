@@ -5,6 +5,7 @@ pub mod list;
 pub mod read;
 pub mod remove;
 pub mod rename;
+pub mod set;
 pub use {
     add::add,
     get::get,
@@ -13,4 +14,5 @@ pub use {
     read::read,
     remove::remove,
     rename::rename,
+    set::set,
 };

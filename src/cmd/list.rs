@@ -10,7 +10,12 @@ use {
     chrono::{Datelike, NaiveDate, Utc},
 };
 
-pub fn list(limit_day: Option<usize>, limit_names: Option<usize>) -> HbdResult<()> {
+pub fn list(
+    limit_day: Option<usize>,
+    limit_names: Option<usize>,
+    is_descending: bool,
+    separator_days: String,
+) -> HbdResult<()> {
     let storage_birthdays = Storage::read_from_json()?;
     let mut config = ToolConfig::read_from_config()?;
 
@@ -38,7 +43,11 @@ pub fn list(limit_day: Option<usize>, limit_names: Option<usize>) -> HbdResult<(
             b.0 + 1024
         };
 
-        a_duration.cmp(&b_duration)
+        if is_descending {
+            b_duration.cmp(&a_duration)
+        } else {
+            a_duration.cmp(&b_duration)
+        }
     });
 
     let mut it_names = 0usize;
@@ -112,7 +121,9 @@ pub fn list(limit_day: Option<usize>, limit_names: Option<usize>) -> HbdResult<(
                 return Ok(());
             }
         }
-        println!();
+
+
+        print!("{}", separator_days);
     }
 
     Ok(())

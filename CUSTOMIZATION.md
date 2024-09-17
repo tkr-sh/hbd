@@ -1,4 +1,12 @@
-// The default configuration for `hbd`
+# Customization
+
+There isn't a lot of customization in `hbd`.
+
+Tho, you can still create a `~/.config/hbd/config.ron` file to add some customization to `hbd`.
+
+Here is the complete list of things that you can customize with it:
+
+```rs
 ToolConfig(
     format: ConfigFormat(
         /// Person's birthdays name when using get with `--separator`
@@ -28,3 +36,8 @@ ToolConfig(
         in_x_days: Some("\x1B[1mIn %d day%s:\x1B[0m"),
     )
 )
+```
+
+_Note: you can also see it [here](./config.ron)_
+
+As you may have seen from the example, the formatting supports ANSI escape, so you can color them as you wish!

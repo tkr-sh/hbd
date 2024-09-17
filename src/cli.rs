@@ -26,6 +26,11 @@ pub enum Commands {
         )]
         birthday: String,
     },
+    #[command(about = "Get today's birthdays")]
+    Get {
+        #[arg(long, help = "Use a separator between names", short = 's')]
+        separator: Option<String>,
+    },
     #[command(about = "Import birthdays from a path")]
     Import {
         #[arg(
@@ -47,10 +52,47 @@ pub enum Commands {
         )]
         check_duplicate: Option<bool>,
     },
-    #[command(about = "Get today's birthdays")]
-    Get {
-        #[arg(long, help = "Use a separator between names", short = 's')]
-        separator: Option<String>,
+    #[command(about = "List all the saved birthdays")]
+    List {
+        #[arg(
+            long,
+            help = "Limit how many days you see the birthday from today",
+            short = 'l'
+        )]
+        limit_days: Option<usize>,
+        #[arg(long, help = "Limit how many names you see from today", short = 'L')]
+        limit_names: Option<usize>,
+        #[arg(long, help = "Should it be descending ?", short = 'd')]
+        descending: Option<bool>,
+        #[arg(
+            long,
+            help = "Separator between days",
+            short = 's',
+            default_value = "\n"
+        )]
+        separator_days: String,
+    },
+    #[command(arg_required_else_help = true)]
+    #[command(
+        about = "Read the birthday of somebody. This birthday won't appear when using `get` this year"
+    )]
+    Read {
+        #[arg(
+            value_name = "NAME",
+            help = "The name of the person that you want to read it's birthday",
+            required = true
+        )]
+        name: String,
+    },
+    #[command(arg_required_else_help = true, alias = "rm")]
+    #[command(about = "Remove someone birthday from your list")]
+    Remove {
+        #[arg(
+            value_name = "NAME",
+            help = "The name of the person that you want to remove",
+            required = true
+        )]
+        name: String,
     },
     #[command(about = "Rename someone")]
     Rename {
@@ -67,37 +109,20 @@ pub enum Commands {
         )]
         to: String,
     },
-    #[command(about = "List all the saved birthdays")]
-    List {
-        #[arg(
-            long,
-            help = "Limit how many days you see the birthday from today",
-            short = 'l'
-        )]
-        limit_days: Option<usize>,
-        #[arg(long, help = "Limit how many names you see from today", short = 'L')]
-        limit_names: Option<usize>,
-    },
-    #[command(arg_required_else_help = true, alias = "rm")]
-    #[command(about = "Remove someone birthday from your list")]
-    Remove {
-        #[arg(
-            value_name = "NAME",
-            help = "The name of the person that you want to remove",
-            required = true
-        )]
-        name: String,
-    },
     #[command(arg_required_else_help = true)]
-    #[command(
-        about = "Read the birthday of somebody. This birthday won't appear when using `get` this year"
-    )]
-    Read {
+    #[command(about = "Set/changes the birthday of a user that already exists")]
+    Set {
         #[arg(
             value_name = "NAME",
-            help = "The name of the person that you want to read it's birthday",
+            help = "The name of the person that you want to set it's birthday",
             required = true
         )]
         name: String,
+        #[arg(
+            value_name = "BIRTHDAY",
+            help = "The birthday (YYYY-MM-DD, if there is a year, else MM-DD)",
+            required = true
+        )]
+        birthday: String,
     },
 }
