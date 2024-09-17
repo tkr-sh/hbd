@@ -17,7 +17,16 @@ fn main() {
         hbd::cli::Commands::List {
             limit_days,
             limit_names,
-        } => list(limit_days, limit_names),
+            descending,
+            separator_days,
+        } => {
+            list(
+                limit_days,
+                limit_names,
+                descending.unwrap_or(false),
+                separator_days,
+            )
+        },
         hbd::cli::Commands::Read { name } => read(&name),
         hbd::cli::Commands::Remove { name } => remove(&name),
         hbd::cli::Commands::Rename { from, to } => rename(&from, &to),

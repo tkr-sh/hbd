@@ -62,6 +62,15 @@ pub enum Commands {
         limit_days: Option<usize>,
         #[arg(long, help = "Limit how many names you see from today", short = 'L')]
         limit_names: Option<usize>,
+        #[arg(long, help = "Should it be descending ?", short = 'd')]
+        descending: Option<bool>,
+        #[arg(
+            long,
+            help = "Separator between days",
+            short = 's',
+            default_value = "\n"
+        )]
+        separator_days: String,
     },
     #[command(arg_required_else_help = true)]
     #[command(
