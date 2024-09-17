@@ -14,6 +14,7 @@ Remember birthdays easily!
 **`hbd`** (**H**appy **B**irth**D**ay) is a CLI program to help you remember birthdays of people.
 There are multiple useful commands to get today's birthdays, get the nexts birthdays, rename people, keep track of their year of birth etc...
 
+---
 
 ```sh
 $ hbd --help
@@ -35,3 +36,25 @@ Commands:
 Options:
   -h, --help  Print help
 ```
+
+---
+
+## Installation
+
+### Cargo
+
+```sh
+cargo install hbd
+```
+
+## Customization
+
+More at [CUSTOMIZATION.md](./CUSTOMIZATION.md)
+
+## Benchmark
+
+More at [METRICS.md](./METRICS.md)
+
+## License
+
+[GPL3](./LICENSE.md)
