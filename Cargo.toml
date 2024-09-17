@@ -4,7 +4,6 @@ version = "0.1.0"
 authors = ["tkr-sh"]
 edition = "2021"
 license = "GPL-3.0-or-later"
-license-file = "./LICENSE.md"
 description = "Remember birthdays easily!"
 repository = "https://github.com/tkr-sh/hbd"
 documentation = "https://docs.rs/hbd/latest/hbd/index.html"
