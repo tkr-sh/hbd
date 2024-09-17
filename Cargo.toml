@@ -1,7 +1,18 @@
 [package]
 name = "hbd"
-version = "0.0.1"
+version = "0.1.0"
+authors = ["tkr-sh"]
 edition = "2021"
+license = "GPL-3.0-or-later"
+license-file = "./LICENSE.md"
+description = "Remember birthdays easily!"
+repository = "https://github.com/tkr-sh/hbd"
+documentation = "https://docs.rs/hbd/latest/hbd/index.html"
+readme = "README.md"
+keywords = ["cli", "birthday", "date"]
+categories = ["cli"]
+
+
 
 [dependencies]
 chrono = "0.4.38"
