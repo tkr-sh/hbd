@@ -30,14 +30,14 @@ pub fn list(
 
     birthdays_sorted.sort_by(|a, b| {
         // convert in number of days
-        let a_duration = if a.0 > *now.date_u16() {
+        let a_duration = if a.0 >= *now.date_u16() {
             a.0
         } else {
             a.0 + 1024
         };
 
         // convert in number of days
-        let b_duration = if b.0 > *now.date_u16() {
+        let b_duration = if b.0 >= *now.date_u16() {
             b.0
         } else {
             b.0 + 1024
