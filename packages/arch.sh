@@ -7,7 +7,7 @@ current_pkg_version="$(rg "^pkgver=" < packages/PKGBUILD | sed -E 's/pkgver=(.+)
 if [ "$version_from_toml" = "$current_pkg_version" ]; then
     pkgrel=$(rg "^pkgrel=" < packages/PKGBUILD | sed -E 's/pkgrel=(.+)/\1/g')
     pkgrel=$(( pkgrel + 1 ))
-    sed -i "s/pkgrel=.*/pkgrel=$pkgrel/g" packages/arch/PKGBUILD
+    sed -i "s/pkgrel=.*/pkgrel=$pkgrel/g" packages/PKGBUILD
 else
     sed -i "s/pkgver=.*/pkgver=$current_pkg_version/g" packages/PKGBUILD
 fi
