@@ -11,6 +11,9 @@ metrics:
 gen-import:
     cargo test -- --ignored
 
+deploy:
+    ./packages/deploy.sh
+
 tape:
     save_date="$(date)"
     sudo date -s "2024-12-20 00:00"

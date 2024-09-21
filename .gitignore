@@ -1,3 +1,5 @@
 /target
 import
 _METRICS*.md
+packages/arch/*
+!packages/arch/PKGBUILD
